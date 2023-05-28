@@ -1,7 +1,7 @@
 import numpy as np
 from tqdm import tqdm
 
-def svc_with_smo(X, y, C, eps, max_iter, kernel):
+def svm_with_smo(X, y, C, eps, max_iter, kernel):
     n_samples, n_features = X.shape
 
     # Initialize alpha to 0
@@ -107,7 +107,7 @@ def one_versus_all(X, y, C, eps, kernel, max_iter):
         y_train[y_train == i] = 1
 
         # Train the binary classifier
-        W[i], b[i] = svc_with_smo(X, y_train, C, eps, max_iter, kernel)
+        W[i], b[i] = svm_with_smo(X, y_train, C, eps, max_iter, kernel)
 
     return W, b
 
@@ -149,7 +149,7 @@ def one_versus_one(X, y, C, eps, kernel, max_iter):
             X_nonzero = X[binary_y != 0]
 
             # Train the binary classifier
-            w, b_value = svc_with_smo(X_nonzero, binary_y_nonzero, C, eps, max_iter, kernel)
+            w, b_value = svm_with_smo(X_nonzero, binary_y_nonzero, C, eps, max_iter, kernel)
 
             W.append(w)
             b.append(b_value)
@@ -178,7 +178,7 @@ def error_correcting_output_codes(X, y, C, eps, kernel, max_iter, encoding_funct
 
     # Train a binary classifier for each binary problem
     for i in range(n_classes):
-        w, b_value = svc_with_smo(X, binary_ys[i], C, eps, max_iter, kernel)
+        w, b_value = svm_with_smo(X, binary_ys[i], C, eps, max_iter, kernel)
         W.append(w)
         b.append(b_value)
 

@@ -1,7 +1,7 @@
 import numpy as np
 
 # Regularized Fourier (stronger mode regularization)
-def regularized_fourier_kernel(x, y, gamma, degree):
+def regularized_fourier_kernel(x, y, gamma=0.9, degree=2):
     """
     Compute the regularized Fourier kernel between two samples x and y.
 
@@ -14,5 +14,5 @@ def regularized_fourier_kernel(x, y, gamma, degree):
     Returns:
         The kernel between x and y.
     """
-
-    return ()
+    
+    return np.exp(-gamma * np.sum((x - y)**2)) * np.cos(gamma * np.sum((x - y)**2))**degree
